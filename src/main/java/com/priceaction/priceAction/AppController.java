@@ -35,7 +35,7 @@ public class AppController {
 				List.of("Wed", 50, 55, 77, 80),
 				List.of("Thu", 77, 77, 66, 50),
 				List.of("Fri", 68, 66, 22, 15),
-				List.of("Sat", 30, 49, 55, 60)
+				List.of("Joao", 30, 49, 55, 60)
 			);
     }
 
@@ -52,8 +52,8 @@ public class AppController {
 
 	@GetMapping("graficos")
 	public String getGraphs(@RequestParam(name="nome",defaultValue="") String nome, Model model){
-		model.addAttribute("chartData1", getChartData1());
-		model.addAttribute("chartData2", getChartData2());
+		///model.addAttribute("chartData1", getChartData1());
+		//model.addAttribute("chartData2", getChartData2());
 		return "graficos";
 	}
 }
