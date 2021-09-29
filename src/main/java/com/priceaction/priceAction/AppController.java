@@ -36,7 +36,7 @@ public class AppController {
 	public List<List<Object>> getDaily(String action){
 		List<List<Object>> ListaCompleta = new ArrayList<>();
 		try{	
-			String urlString = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol="+action+"&apikey=demo";
+			String urlString = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol="+action+"&apikey=X6P8S5TFG9UIQUZ7";
 			URL url = new URL(urlString);
 			URLConnection conn = url.openConnection();
 			InputStream is = conn.getInputStream();
@@ -70,7 +70,7 @@ public class AppController {
 	public List<List<Object>> getWeekly(String action){
 		List<List<Object>> ListaCompleta = new ArrayList<>();
 		try{	
-			String urlString = "https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY&symbol="+action+"&apikey=demo";
+			String urlString = "https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY&symbol="+action+"&apikey=X6P8S5TFG9UIQUZ7";
 			URL url = new URL(urlString);
 			URLConnection conn = url.openConnection();
 			InputStream is = conn.getInputStream();
@@ -104,7 +104,7 @@ public class AppController {
 	public List<List<Object>> getMonthly(String action){
 		List<List<Object>> ListaCompleta = new ArrayList<>();
 		try{	
-			String urlString = "https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&symbol="+action+"&apikey=demo";
+			String urlString = "https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&symbol="+action+"&apikey=X6P8S5TFG9UIQUZ7";
 			URL url = new URL(urlString);
 			URLConnection conn = url.openConnection();
 			InputStream is = conn.getInputStream();
