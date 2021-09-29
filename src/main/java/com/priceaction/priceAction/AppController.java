@@ -50,10 +50,10 @@ public class AppController {
 			);
 	}
 
-	@GetMapping("graficos")
-	public String getGraphs(@RequestParam(name="nome",defaultValue="") String nome, Model model){
-		model.addAttribute("chartData1", getChartData1());
-		model.addAttribute("chartData2", getChartData2());
-		return "graficos";
-	}
+	// @GetMapping("graficos")
+	// public String getGraphs(@RequestParam(name="nome",defaultValue="") String nome, Model model){
+	// 	model.addAttribute("chartData1", getChartData1());
+	// 	model.addAttribute("chartData2", getChartData2());
+	// 	return "graficos";
+	// }
 }

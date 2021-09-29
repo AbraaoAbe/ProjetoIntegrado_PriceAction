@@ -60,15 +60,25 @@
 
 			/*Style para o conteúdo principal da página*/
 			.body-content{
+  				background-color: white; /* For browsers that do not support gradients */
+  				
+				border-radius: 10px;
 				min-width: 320mm;
 				margin-left: 80mm;
 				margin-right: 80mm;
-				background-color: white;
 				display: grid; 
 				padding-top: 2cm; 
 				padding-bottom: 2cm;
 				align-items: center;
 				justify-content: center;
+			}
+
+			.text-area{
+				border-style: solid;
+				border-color: blueviolet;
+				border-radius: 10px;
+				width: 500px;
+				height: 300px;				
 			}
 
 			.graficos{
@@ -382,8 +392,18 @@
 			  </nav>
 		</header>
 		<section class="body-content">
-	
 
+			<table>
+				<tr>
+					<td style="padding-right: 3cm;"><img src="Analysis.gif"  style="width: 400px; height: 450px;" title="investindo"></td>
+					<td><div class="text-area">Some text here</div></tr>
+				</tr>
+				<tr>
+					<td><div class="text-area">some text here</div></td>
+					<td style="padding-left: 3cm;"><img src="Crypto portfolio.gif" style="width: 400px; height: 450px;"></td>
+				</tr>
+			</table>	
+			
 			<section style="display: flex; align-items: center; justify-content: center;">
 				<p>
 				<!-- <a class="btn btn-primary" data-bs-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Toggle first element</a> -->
@@ -465,57 +485,9 @@
 			<section style="display: flex; align-items: center; justify-content: center;">
 				<div id="linechart" style="float: left; height: 480px; width: 250mm; padding-top: 10mm; padding-bottom: 10mm;"></div>
 			</section>
-
-			<div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
-				<div class="carousel-indicators">
-				  <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-				  <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
-				  <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
-				</div>
-				<div class="carousel-inner">
-					<div class="carousel-item active">
-						<section class="block-size">
-							<img src="grafico-coluna.png" class="d-block w-100" alt="Grafico de barras" title="Gráfico de barras">
-						</section>
-						
-						<div class="carousel-caption d-none d-md-block">
-						<h5>Gráfico de coluna</h5>
-						<p>Some representative placeholder content for the first slide.<br>
-							As imagens não estão carregando.
-						</p>
-						</div>
-					</div>
-					<div class="carousel-item">
-							<section class="block-size">
-								<img src="grafico-linha.png" class="d-block w-100" alt="Gráfico de linha" title="Gráfico de linha">
-							</section>
-						<div class="carousel-caption d-none d-md-block">
-						<h5>Gráfico de linha</h5>
-						<p>Some representative placeholder content for the first slide.<br>
-							As imagens não estão carregando.</p>
-						</div>
-					</div>
-					<div class="carousel-item">
-						<section class="block-size">
-							<img src="grafico-candle.png" class="d-block w-100" alt="Gráfico de candle" title="Gráfico de candle">
-						</section>
-						<div class="carousel-caption d-none d-md-block">
-						<h5>Gráfico candle</h5>
-						<p>Some representative placeholder content for the third slide.<br>
-							As imagens não estão carregando.</p>
-						</div>
-					</div>
-				</div>
-				<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-				  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-				  <span class="visually-hidden">Previous</span>
-				</button>
-				<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
-				  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-				  <span class="visually-hidden">Next</span>
-				</button>
-			  </div>
+			
+			
 		</section>
-
+		
 	</body>
 </html>

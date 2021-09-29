@@ -1,66 +1,521 @@
-<html>
-  <head>
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js" style="left: 300mm;"></script>
-    <script type="text/javascript" th:inline="javascript" >
-      google.charts.load('current', {'packages':['corechart']});
-      google.charts.setOnLoadCallback(drawChart);
-		var msg = "NULL";
-		var button = document.getElementById('b1');
-		var data1 = [[${chartData1}]];
-		/*Dados para fazer teste na visualização do gráfico*/
-				// [
-				// ['Mon', 20, 28, 38, 45],
-				// ['Tue', 31, 38, 55, 66],
-				// ['Wed', 50, 55, 77, 80],
-				// ['Thu', 77, 77, 66, 50],
-				// ['Fri', 68, 66, 22, 15],
-				// ['Sat', 30, 49, 55, 60]
-				// ];
-				
-		var data2 = [[${chartData2}]];
-		/*Dados para fazer teste na visualização do gráfico*/
-				// [
-				// ['Mon', 30, 35, 40, 60],
-				// ['Tue', 28, 41, 55, 66],
-				// ['Wed', 65, 40, 69, 80],
-				// ['Thu', 21, 28, 40, 55],
-				// ['Fri', 38, 40, 45, 70]
-				// ];
-				
-			var options = {
-			legend:'none',
-			title: 'Grafico Exemplo',
-			animation: {
-				"startup": true,
-				duration: 1000
-				},
-			colors: ['red','#004411'],
-			};
-			var current = 0;
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<title>Price Action</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+
+		<!-- GoogleCharts -->
+		<!--Load the AJAX API-->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+		<!-- Bootstrap CSS -->
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+			integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+			crossorigin="anonymous">
+		<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+		<style>
+			header{
+				min-width: 50mm;
+				padding-bottom: 2mm;
+			}
+			body{
+				min-width: 100mm;
+				background-color: gray;
+				display: block;
+			}
+			img{
+				width: 70mm;
+				height: 50mm;
+				max-width: 150mm;
+			}
+			label{
+				text-align: center;
+			}
+
+			/*Style para os cards*/
+			.carousel{
+				width: 300mm;
+				padding-top: 3mm;
+				background-color:blueviolet;
+			}
+			.block-size{
+				padding-top: 20mm;
+				padding-bottom: 40mm;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				align-self: center;
+			}
+			.carousel-caption{
+				background-color: blueviolet;
+			}
+
+			/*Style para o conteúdo principal da página*/
+			.body-content{
+				min-width: 320mm;
+				margin-left: 80mm;
+				margin-right: 80mm;
+				background-color: white;
+				display: grid; 
+				padding-top: 2cm; 
+				padding-bottom: 2cm;
+				align-items: center;
+				justify-content: center;
+			}
+
+			.graficos{
+				width: 530px; 
+				height: 300px;
+				border-style: solid;
+				border-color: black;
+			}
+
+			.card{
+				text-align: center;
+				align-items: center;
+				justify-content: center;
+			}
+
+			.info{
+				width: 25mm;
+				height: 10mm;
+				border-style: solid;
+				border-color: black;
+				border-radius: 15px;
+				box-shadow: 3px 3px 3px 1px black;
+			}
+
+		</style>
+		<script type="text/javascript" th:inline="javascript">
+	
+			// Load the Visualization API and the corechart package.
+			google.charts.load('current', {'packages':['corechart']});
+			google.charts.load('current', {'packages':['line']});
+	  
+			// Set a callback to run when the Google Visualization API is loaded.
+			// google.charts.setOnLoadCallback(drawLineChart);
+   			// google.charts.setOnLoadCallback(drawCandleStickChart);
+			google.charts.setOnLoadCallback(drawCharts);
+			var descricao = 'Dados fictícios';
 			
-		function drawChart() {
-			var data = [];
-			var chart = new google.visualization.CandlestickChart(document.getElementById('chart_div'));
-			data[0] = google.visualization.arrayToDataTable(data1, true);
-			data[1] = google.visualization.arrayToDataTable(data2, true);
-			if(current === 0){
-				chart.draw(data[0], options);
-				current = 1;
-			}else{
-				chart.draw(data[1], options);
-				current = 0;
+			var line_data1 = //[[${lineData1}]];
+				//   x     y
+				[			
+					['1',  70.8],
+					['2',  30.9],
+					['3',  25.4],
+					['4',  11.7],
+					['5',  11.9],
+					['6',   8.8],
+					['7',   7.6],
+					['8',  12.3],
+					['9',  15.8],
+					['10', 12.8],
+					['11',  5.3],
+					['12',  6.6],
+					['13',  4.8],
+					['14',  7.2]
+				];
+			var line_data2 = //[[${lineData2}]];
+				[
+					['1',  80.8],
+					['2',  75.4],
+					['3',  81.4],
+					['4',   69.5],
+					['5',  50.9],
+					['6',   56.7],
+					['7',   40.6],
+					['8',  35.6],
+					['9',  45.9],
+					['10', 23.6],
+					['11',  10.3],
+					['12',  15.2],
+					['13',  4.8],
+					['14',  3.4]
+				];
+			
+			var line_data3 = //[[${lineData3}]];
+			[			
+					['1',  3.8],
+					['2',  30.9],
+					['3',  25.4],
+					['4',  30.7],
+					['5',  24.9],
+					['6',   17.8],
+					['7',   21.6],
+					['8',  30.3],
+					['9',  28.9],
+					['10', 32.8],
+					['11',  49.3],
+					['12',  50.6],
+					['13',  51.8],
+					['14',  45.2]
+				];
+
+				var lineDataDefault = 
+				[
+					['1',  23.8],
+					['2',  32.4],
+					['3',  25.4],
+					['4',  10.5],
+					['5',  11.9],
+					['6',   7.7],
+					['7',   7.6],
+					['8',  110.6],
+					['9',  16.9],
+					['10', 11.6],
+					['11',  5.3],
+					['12',  5.2],
+					['13',  4.8],
+					['14',  3.4]
+				];
+			function drawLineChart(num) {
+				
+				var nomeAcao = 'AçãoX';//BackEnd envia o nome
+				var legenda;
+				var data = new google.visualization.DataTable();
+				data.addColumn('string', null);
+
+				data.addColumn('number', nomeAcao);//Sugestão de nome pls
+				var chart = new google.charts.Line(document.getElementById('linechart'));
+
+				if(num === 1){
+					data.addRows(line_data1);
+					descricao = 'Valor das acões nos últimos 20 dias';
+				}else if(num === 2){
+					data.addRows(line_data2);
+					descricao = 'Valor das acões nas últimas 20 semanas';
+				}else if(num === 3){
+					data.addRows(line_data3);
+					descricao = 'Valor das acões nos últimos 20 meses';
+				}else{
+					data.addRows(lineDataDefault);
+					legenda = 'Insira o nome da ação no campo de pesquisa para começar a ver dados reais';
+				}
+			
+				var options = {
+					chart: {
+					title: descricao,
+					subtitle: legenda,
+					},
+					animation: {
+						"startup": true,
+						duration: 1000,
+					},
+					vAxis:{
+						title:"Valor(R$)",
+					},
+					legend:{
+						position: 'none'
+					},
+					hAxis:{
+						textPosition: 'none'
+					},
+					colors: ['blueviolet','#004411'],
+					titleTextStyle:{
+						color: 'black',
+						bold: true
+					}
+				};
+				chart.draw(data, google.charts.Line.convertOptions(options));
+			}
+		
+			/*----------------------------------------*/
+
+			var candle_data1 = //[[${candleData1}]];
+			/*Dados para fazer teste na visualização do gráfico*/
+					[
+					['18/07', 20, 28, 38, 45],
+					['19/07', 31, 38, 55, 66],
+					['20/07', 50, 55, 77, 80],
+					['21/07', 77, 77, 66, 50],
+					['22/07', 68, 66, 22, 15],
+					['23/07', 30, 49, 55, 60],
+					['24/07', 68, 66, 22, 15]
+					];
+					
+			var candle_data2 = //[[${candleData2}]];
+			/*Dados para fazer teste na visualização do gráfico*/
+					[
+					['Sem1', 30, 35, 40, 60],
+					['Sem2', 28, 41, 55, 66],
+					['Sem3', 65, 40, 69, 80],
+					['Sem4', 21, 28, 40, 55],
+					['Sem5', 38, 40, 45, 70],
+					['sem6', 20, 28, 38, 45],
+					['sem7', 31, 38, 55, 66],
+					['sem8', 50, 55, 77, 80],
+					['sem9', 77, 77, 66, 50],
+					['sem10', 68, 66, 22, 15],
+					['sem11', 30, 49, 55, 60],
+					['sem12', 68, 66, 22, 15]
+					];
+
+			var candle_data3 = //[[${candleData3}]];
+			/*Dados para fazer teste na visualização do gráfico*/
+					[
+					['MAI', 30, 35, 45, 60],
+					['JUN', 28, 41, 55, 66],
+					['JUL', 20, 28, 38, 45],
+					['AGO', 68, 63, 22, 15],
+					['SET', 38, 40, 45, 70]
+					];
+				
+			function drawCandleStickChart(num) {
+				var data;
+
+				if(num === 1){
+					descricao = 'Valor das acões nos últimos 20 dias';
+					data = google.visualization.arrayToDataTable(candle_data1, true);
+				}else if(num === 2){
+					descricao = 'Valor das acões nas últimas 20 semanas';
+					data = google.visualization.arrayToDataTable(candle_data2, true);
+				}else if(num === 3){
+					descricao = 'Valor das acões nos últimos 20 meses';
+					data = google.visualization.arrayToDataTable(candle_data3, true);
+				}else{
+					data = google.visualization.arrayToDataTable(candle_data1, true);
+				}
+
+				var options = {
+					legend:'none',
+					title: descricao,
+					animation: {
+						"startup": true,
+						duration: 1000
+					},
+					vAxis:{
+						title:"Valor(R$)",
+					},
+					colors: ['blueviolet','#004411'],
+					titleTextStyle:{
+						color: 'black',
+						bold: true
+					}
+				};
+				
+				var chart = new google.visualization.CandlestickChart(document.getElementById('candlechart'));
+
+				chart.draw(data, options);				
 			}
 			
-   		}
-    </script>
-  </head>
-  <body>
-	<div id="chart_div" style="width: 800px; height: 300px; border:2px solid black;" ></div>
-	<div>
-		<button type="button" class="btn btn-outline-success" id="b1" onclick="drawChart()" >
-			Change
-		</button>
-	</div>
-  </body>
+			
+			/*Muda a cor da variação caso seja negativa ou positiva*/
+			function infoColor(){
+				var variacao = document.getElementById('variacao');
+				var b = document.getElementById("mf");
+				
+				if(b.innerHTML === "Menos Informações"){
+					b.innerHTML = "Mais Informações";
+				}else{
+					b.innerHTML = "Menos Informações";
+				}
+				if(variacao.innerHTML[0] === '+'){
+					variacao.style.color = "rgb(7, 214, 17)";
+				}else if(variacao.innerHTML[0] === '-'){
+					variacao.style.color = "red";
+				}else{
+					variacao.style.color = "black";
+				}
+				
+			}
+
+			function drawCharts(num){
+				if(num === undefined){
+					drawLineChart(0);
+					drawCandleStickChart(0);
+				}else{
+					drawLineChart(num);
+					drawCandleStickChart(num);
+				}
+			}
+
+		</script>
+	</head>
+
+	<body>
+		<header>
+			<nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="padding-right: 80mm; padding-left: 80mm;">
+				<div class="container-fluid">
+				  <a class="navbar-brand" href="#">
+					  Navbar
+				  </a>
+				  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				  </button>
+				  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+					  <li class="nav-item">
+						<a class="nav-link active" aria-current="page" href="#">Home</a>
+					  </li>
+					  <li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+						  Paginas
+						</a>
+						<ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-color: black;">
+							<li><a class="dropdown-item" href="graficos" style="background-color: black;">
+								<button type="button" class="btn btn-outline-success">Candle detalhado</button>
+							</a></li>
+							<li><a class="dropdown-item" href="#" style="background-color: black;">
+								<button type="button" class="btn btn-outline-info">Autores</button>	
+							</a></li>
+							<li><a class="dropdown-item" href="#" style="background-color: black;">
+								<button type="button" class="btn btn-outline-info">Info</button>	
+							</a></li>
+						</ul>
+					  </li>
+					</ul>
+					<form class="d-flex" action="/graficos" method="POST">
+					  <input class="form-control me-2" type="text" name="textInput" placeholder='Imprimindo no terminal' aria-label="Search">
+					  <button class="btn btn-outline-success" type="submit">Search</button>
+					</form>
+				  </div>
+				</div>
+			  </nav>
+		</header>
+		<section class="body-content">
+	
+
+			<section style="display: flex; align-items: center; justify-content: center;">
+				<p>
+				<!-- <a class="btn btn-primary" data-bs-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Toggle first element</a> -->
+			
+				<button id="mf" class="btn btn-primary" onclick="infoColor()" type="button" data-bs-toggle="collapse" data-bs-target=".multi-collapse" aria-expanded="false" aria-controls="info1 info2 info3 info4 info5">Mais informações</button>
+
+				</p>
+	
+			</section>
+			<!-- Manda String para essas dados exibidos -->
+			<div class="row">
+				<div class="col">
+				  <div class="collapse multi-collapse" id="info1">
+					<div class="card card-body"><h4>REAIS</h4>
+						<div class="info">
+							<p id="reais">52.5</p>
+						</div>
+					  
+					</div>
+				  </div>
+				</div>
+				<div class="col">
+				  <div class="collapse multi-collapse" id="info2">
+					<div class="card card-body"><h4>VARIAÇÃO</h4>
+						<div class="info">
+							<p id="variacao">-22.5%</p>
+						</div>
+					</div>
+				  </div>
+				</div>
+				<div class="col">
+					<div class="collapse multi-collapse" id="info3">
+					  <div class="card card-body"><h4>MIN</h4>
+						<div class="info">
+							<p id="min">37.5</p>
+						</div>
+						
+					  </div>
+					</div>
+				  </div>
+				  <div class="col">
+					<div class="collapse multi-collapse" id="info4">
+					  <div class="card card-body"><h4>MAX</h4>
+						<div class="info">
+							<p id="max">99.5</p>
+						</div>
+					  </div>
+					</div>
+				  </div>
+				  <div class="col">
+					<div class="collapse multi-collapse" id="info5">
+					  <div class="card card-body"><h4>VOLUME</h4>
+						<div class="info">
+							<p id="volume">1.5B</p>
+						</div>
+					  </div>
+					</div>
+				  </div>
+			  </div>
+
+			<section style="display: flex; align-items: center; justify-content: center;">
+
+				<div id="candlechart" style="float: left; height: 480px; width: 280mm;"></div>
+
+				<div class="btn-group-vertical" role="group" aria-label="Basic radio toggle button group" style="width: 3cm; height: 3cm;">
+						<input type="radio" value="1" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
+						<label onclick="drawCharts(1)" class="btn btn-outline-primary" for="btnradio1">Diário</label>
+						
+						<input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+						<label onclick="drawCharts(2)" class="btn btn-outline-primary" for="btnradio2">Semanal</label>
+						
+						<input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
+						<label onclick="drawCharts(3)" class="btn btn-outline-primary" for="btnradio3">Mensal</label>
+					
+				</div>
+
+			</section>
+			
+			<section style="display: flex; align-items: center; justify-content: center;">
+				<div id="linechart" style="float: left; height: 480px; width: 250mm; padding-top: 10mm; padding-bottom: 10mm;"></div>
+			</section>
+
+			<div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+				<div class="carousel-indicators">
+				  <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+				  <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+				  <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+				</div>
+				<div class="carousel-inner">
+					<div class="carousel-item active">
+						<section class="block-size">
+							<img src="grafico-coluna.png" class="d-block w-100" alt="Grafico de barras" title="Gráfico de barras">
+						</section>
+						
+						<div class="carousel-caption d-none d-md-block">
+						<h5>Gráfico de coluna</h5>
+						<p>Some representative placeholder content for the first slide.<br>
+							As imagens não estão carregando.
+						</p>
+						</div>
+					</div>
+					<div class="carousel-item">
+							<section class="block-size">
+								<img src="grafico-linha.png" class="d-block w-100" alt="Gráfico de linha" title="Gráfico de linha">
+							</section>
+						<div class="carousel-caption d-none d-md-block">
+						<h5>Gráfico de linha</h5>
+						<p>Some representative placeholder content for the first slide.<br>
+							As imagens não estão carregando.</p>
+						</div>
+					</div>
+					<div class="carousel-item">
+						<section class="block-size">
+							<img src="grafico-candle.png" class="d-block w-100" alt="Gráfico de candle" title="Gráfico de candle">
+						</section>
+						<div class="carousel-caption d-none d-md-block">
+						<h5>Gráfico candle</h5>
+						<p>Some representative placeholder content for the third slide.<br>
+							As imagens não estão carregando.</p>
+						</div>
+					</div>
+				</div>
+				<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+				  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				  <span class="visually-hidden">Previous</span>
+				</button>
+				<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+				  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+				  <span class="visually-hidden">Next</span>
+				</button>
+			  </div>
+		</section>
+
+	</body>
 </html>
