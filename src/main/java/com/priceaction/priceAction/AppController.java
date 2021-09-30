@@ -51,11 +51,11 @@ public class AppController {
 			for(Map.Entry<String, JsonElement> data : datas.getAsJsonObject().entrySet()) {
 				if(cont == 20)	break;
 
-				SimpleDateFormat teste = new SimpleDateFormat("yyyy-MM-dd");
+				SimpleDateFormat teste = new SimpleDateFormat("dd-MM");
 				Date data1 = teste.parse(data.getKey().toString());
 				String novoFormato = teste.format(data1);
 				System.out.println(novoFormato);
-				
+
 				ListaCompleta.add(
 					List.of(
 						data.getKey().toString(),
