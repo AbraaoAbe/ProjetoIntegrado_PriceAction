@@ -5,12 +5,14 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
 import java.util.Map;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -48,6 +50,12 @@ public class AppController {
 			int cont = 0;
 			for(Map.Entry<String, JsonElement> data : datas.getAsJsonObject().entrySet()) {
 				if(cont == 20)	break;
+
+				SimpleDateFormat teste = new SimpleDateFormat("yyyy-MM-dd");
+				Date data1 = teste.parse(data.getKey().toString());
+				String novoFormato = teste.format(data1);
+				System.out.println(novoFormato);
+				
 				ListaCompleta.add(
 					List.of(
 						data.getKey().toString(),
