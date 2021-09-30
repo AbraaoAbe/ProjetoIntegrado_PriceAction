@@ -12,6 +12,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -35,6 +36,11 @@ public class AppController {
 	}
 
 	@Deprecated
+	public void getInfo(String action){
+
+	}
+
+	@Deprecated
 	public List<List<Object>> getDaily(String action){
 		List<List<Object>> ListaCompleta = new ArrayList<>();
 		try{	
@@ -49,16 +55,17 @@ public class AppController {
 			JsonElement datas = json.getAsJsonObject().get("Time Series (Daily)");
 			int cont = 0;
 			for(Map.Entry<String, JsonElement> data : datas.getAsJsonObject().entrySet()) {
-				if(cont == 20)	break;
+				if(cont >= 20)	break;
 
-				SimpleDateFormat teste = new SimpleDateFormat("dd-MM");
-				Date data1 = teste.parse(data.getKey().toString());
-				String novoFormato = teste.format(data1);
-				System.out.println(novoFormato);
+				SimpleDateFormat conversor = new SimpleDateFormat("yyyy-MM-dd");
+				Date dataJSON = conversor.parse(data.getKey().toString());
+				SimpleDateFormat formatador = new SimpleDateFormat("dd/MM");
+				String dataFormatada = formatador.format(dataJSON);
+				
 
 				ListaCompleta.add(
 					List.of(
-						data.getKey().toString(),
+						dataFormatada,
 						data.getValue().getAsJsonObject().get("3. low").getAsDouble(),
 						data.getValue().getAsJsonObject().get("1. open").getAsDouble(),
 						data.getValue().getAsJsonObject().get("4. close").getAsDouble(),
@@ -67,6 +74,7 @@ public class AppController {
 				);
 				cont++;
 			}
+			Collections.reverse(ListaCompleta);
 		}
 		catch(Exception e){
 			System.out.println("Ação nao encontrada");
@@ -89,10 +97,16 @@ public class AppController {
 			JsonElement datas = json.getAsJsonObject().get("Weekly Time Series");
 			int cont = 0;
 			for (Map.Entry<String, JsonElement> data : datas.getAsJsonObject().entrySet()) {
-				if(cont == 20)	break;
+				if(cont >= 20)	break;
+
+				SimpleDateFormat conversor = new SimpleDateFormat("yyyy-MM-dd");
+				Date dataJSON = conversor.parse(data.getKey().toString());
+				SimpleDateFormat formatador = new SimpleDateFormat("dd/MM");
+				String dataFormatada = formatador.format(dataJSON);
+
 				ListaCompleta.add(
 					List.of(
-						data.getKey().toString(),
+						dataFormatada,
 						data.getValue().getAsJsonObject().get("3. low").getAsDouble(),
 						data.getValue().getAsJsonObject().get("1. open").getAsDouble(),
 						data.getValue().getAsJsonObject().get("4. close").getAsDouble(),
@@ -101,6 +115,7 @@ public class AppController {
 				);
 				cont++;
 			}
+			Collections.reverse(ListaCompleta);
 		}
 		catch(Exception e){
 			System.out.println("Ação nao encontrada");
@@ -123,10 +138,16 @@ public class AppController {
 			JsonElement datas = json.getAsJsonObject().get("Monthly Time Series");
 			int cont = 0;
 			for (Map.Entry<String, JsonElement> data : datas.getAsJsonObject().entrySet()) {
-				if(cont == 20) break;
+				if(cont >= 20)	break;
+
+				SimpleDateFormat conversor = new SimpleDateFormat("yyyy-MM-dd");
+				Date dataJSON = conversor.parse(data.getKey().toString());
+				SimpleDateFormat formatador = new SimpleDateFormat("MM/yyyy");
+				String dataFormatada = formatador.format(dataJSON);
+
 				ListaCompleta.add(
 					List.of(
-						data.getKey().toString(),
+						dataFormatada,
 						data.getValue().getAsJsonObject().get("3. low").getAsDouble(),
 						data.getValue().getAsJsonObject().get("1. open").getAsDouble(),
 						data.getValue().getAsJsonObject().get("4. close").getAsDouble(),
@@ -135,6 +156,7 @@ public class AppController {
 				);
 				cont++;
 			}
+			Collections.reverse(ListaCompleta);
 		}
 		catch(Exception e){
 			System.out.println("Ação nao encontrada");
