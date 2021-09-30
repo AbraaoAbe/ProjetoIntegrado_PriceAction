@@ -339,12 +339,19 @@
 			}
 
 			function drawCharts(num){
-				if(num === undefined){
-					drawLineChart(0);
-					drawCandleStickChart(0);
-				}else{
+				/*Se mandar -1 é por que a busca não de resultado, manda 1 para ok na busca*/
+				var sh = 1;//[[$showGraphs]]
+				if(sh === 1){
+					if(num === undefined){
+						num = 1;
+					}
 					drawLineChart(num);
 					drawCandleStickChart(num);
+				}else if(sh === -1){
+					document.getElementById('graph-box').style.display = "none";
+					/*Exibir alerta na tela*/
+				}else{
+					alert("Algo de muito errado não está certo.");
 				}
 			}
 
@@ -383,24 +390,27 @@
 						</ul>
 					  </li>
 					</ul>
-					<form class="d-flex" action="/" method="POST">
+					<!-- action="/" method="POST" -->
+					<form class="d-flex"  >
 					  <input class="form-control me-2" type="text" name="textInput" placeholder='Imprimindo no terminal' aria-label="Search">
-					  <button class="btn btn-outline-success" type="submit">Search</button>
+					  <button class="btn btn-outline-success" id="sch">Search</button>
+					  <!-- type="submit" -->
 					</form>
 				  </div>
 				</div>
 			  </nav>
 		</header>
 		<section class="body-content">
-
+				
 			<table>
 				<tr>
-					<td style="padding-right: 3cm;"><img src="Analysis.gif"  style="width: 400px; height: 450px;" title="investindo"></td>
+					<td style="padding-right: 3cm;"><img th:src="@{/Analysis.gif}" src="/src/main/resources/static/Analysis.gif"  style="width: 400px; height: 450px;" title="investindo"></td> 
 					<td><div class="text-area">Some text here</div></tr>
 				</tr>
 				<tr>
 					<td><div class="text-area">some text here</div></td>
-					<td style="padding-left: 3cm;"><img src="Crypto portfolio.gif" style="width: 400px; height: 450px;"></td>
+					<td style="padding-left: 3cm;"><img th:src="@{/Cryptoportfolio.gif}" style="width: 400px; height: 450px;"></td>
+					
 				</tr>
 			</table>	
 			
@@ -408,7 +418,7 @@
 				<p>
 				<!-- <a class="btn btn-primary" data-bs-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Toggle first element</a> -->
 			
-				<button id="mf" class="btn btn-primary" onclick="infoColor()" type="button" data-bs-toggle="collapse" data-bs-target=".multi-collapse" aria-expanded="false" aria-controls="info1 info2 info3 info4 info5">Mais informações</button>
+				<button id="mf" class="btn btn-primary" onclick="drawCharts()" type="button" data-bs-toggle="collapse" data-bs-target=".multi-collapse" aria-expanded="false" aria-controls="info1 info2 info3 info4 info5">Mais informações</button>
 
 				</p>
 	
@@ -464,29 +474,28 @@
 				  </div>
 			  </div>
 
-			<section style="display: flex; align-items: center; justify-content: center;">
+			  	<div id = "graph-box">
 
-				<div id="candlechart" style="float: left; height: 480px; width: 280mm;"></div>
+					<section style="display: grid; align-items: center; justify-content: center; grid-template-columns: 240mm 3cm;">
+						<div id="candlechart" style="float: left; height: 450px"></div>
+						<div class="btn-group-vertical" role="group" aria-label="Basic radio toggle button group">
+								<input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
+								<label onclick="drawCharts(1)" class="btn btn-outline-secondary" for="btnradio1">Diário</label>
+								
+								<input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+								<label onclick="drawCharts(2)" class="btn btn-outline-secondary" for="btnradio2">Semanal</label>
+								
+								<input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
+								<label onclick="drawCharts(3)" class="btn btn-outline-secondary" for="btnradio3">Mensal</label>
+							
+						</div>
+					</section>
+					<section style="display: flex; align-items: center; justify-content: center;">
+						<div id="linechart" style="float: left; height: 480px; width: 230mm; padding-top: 10mm; padding-bottom: 10mm;"></div>
+					</section>
 
-				<div class="btn-group-vertical" role="group" aria-label="Basic radio toggle button group" style="width: 3cm; height: 3cm;">
-						<input type="radio" value="1" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
-						<label onclick="drawCharts(1)" class="btn btn-outline-primary" for="btnradio1">Diário</label>
-						
-						<input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
-						<label onclick="drawCharts(2)" class="btn btn-outline-primary" for="btnradio2">Semanal</label>
-						
-						<input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
-						<label onclick="drawCharts(3)" class="btn btn-outline-primary" for="btnradio3">Mensal</label>
-					
 				</div>
-
-			</section>
-			
-			<section style="display: flex; align-items: center; justify-content: center;">
-				<div id="linechart" style="float: left; height: 480px; width: 250mm; padding-top: 10mm; padding-bottom: 10mm;"></div>
-			</section>
-			
-			
+					
 		</section>
 		
 	</body>
