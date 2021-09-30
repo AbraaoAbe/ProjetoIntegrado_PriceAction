@@ -5,7 +5,11 @@
 		<title>Price Action</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-
+		<link 
+			rel="shortcut icon"
+			th:href="@{/Icon.png}"
+			type="image/x-icon"
+			>
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
 
@@ -67,6 +71,8 @@
 				margin-left: 80mm;
 				margin-right: 80mm;
 				display: grid; 
+				margin-top: 2cm;
+				margin-bottom: 1cm;
 				padding-top: 2cm; 
 				padding-bottom: 2cm;
 				align-items: center;
@@ -79,6 +85,23 @@
 				border-radius: 10px;
 				width: 500px;
 				height: 300px;				
+			}
+
+			.text-info-area{
+				margin-top: 1cm;
+				margin-bottom: 1cm;
+				border-style: solid;
+				border-top-left-radius: 30px;
+				border-bottom-right-radius: 30px;
+				width: 800px;
+				height: 150px;
+				background-color: blueviolet;
+				text-align: center;
+				font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+				align-content: center;
+				display: flex;
+				align-items: center;
+				justify-content: center;
 			}
 
 			.graficos{
@@ -317,34 +340,16 @@
 				chart.draw(data, options);				
 			}
 			
-			
-			/*Muda a cor da variação caso seja negativa ou positiva*/
-			function infoColor(){
-				var variacao = document.getElementById('variacao');
-				var b = document.getElementById("mf");
-				
-				if(b.innerHTML === "Menos Informações"){
-					b.innerHTML = "Mais Informações";
-				}else{
-					b.innerHTML = "Menos Informações";
-				}
-				if(variacao.innerHTML[0] === '+'){
-					variacao.style.color = "rgb(7, 214, 17)";
-				}else if(variacao.innerHTML[0] === '-'){
-					variacao.style.color = "red";
-				}else{
-					variacao.style.color = "black";
-				}
-				
-			}
+		
 
 			function drawCharts(num){
 				/*Se mandar -1 é por que a busca não de resultado, manda 1 para ok na busca*/
-				var sh = 1;//[[$showGraphs]]
+				var sh = 1;
 				if(sh === 1){
 					if(num === undefined){
 						num = 1;
 					}
+					// document.body.scrollTo('graph-box');
 					drawLineChart(num);
 					drawCandleStickChart(num);
 				}else if(sh === -1){
@@ -360,41 +365,16 @@
 
 	<body>
 		<header>
-			<nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="padding-right: 80mm; padding-left: 80mm;">
+			<nav class="navbar navbar-dark fixed-top" style="padding-right: 80mm; padding-left: 80mm; background-color: rgba(32, 5, 32, 0.904)">
 				<div class="container-fluid">
 				  <a class="navbar-brand" href="#">
-					  Navbar
+					  <img th:src="@{/Icon.png}" style="width: 50px; height: 50px;">
+					  Price Action
 				  </a>
-				  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				  </button>
-				  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-					  <li class="nav-item">
-						<a class="nav-link active" aria-current="page" href="#">Home</a>
-					  </li>
-					  <li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-						  Paginas
-						</a>
-						<ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-color: black;">
-							<li><a class="dropdown-item" href="graficos" style="background-color: black;">
-								<button type="button" class="btn btn-outline-success">Candle detalhado</button>
-							</a></li>
-							<li><a class="dropdown-item" href="#" style="background-color: black;">
-								<button type="button" class="btn btn-outline-info">Autores</button>	
-							</a></li>
-							<li><a class="dropdown-item" href="#" style="background-color: black;">
-								<button type="button" class="btn btn-outline-info">Info</button>	
-							</a></li>
-						</ul>
-					  </li>
-					</ul>
-					<!-- action="/" method="POST" -->
-					<form class="d-flex"  >
+				  <!-- action="/" method="POST" -->
+					<form class="d-flex" action="/#destino" method="POST">
 					  <input class="form-control me-2" type="text" name="textInput" placeholder='Imprimindo no terminal' aria-label="Search">
-					  <button class="btn btn-outline-success" id="sch">Search</button>
-					  <!-- type="submit" -->
+					  <button class="btn btn-outline-success" type="submit">Search</button>
 					</form>
 				  </div>
 				</div>
@@ -404,77 +384,30 @@
 				
 			<table>
 				<tr>
-					<td style="padding-right: 3cm;"><img th:src="@{/Analysis.gif}" src="/src/main/resources/static/Analysis.gif"  style="width: 400px; height: 450px;" title="investindo"></td> 
+					<td style="padding-right: 3cm;"><img th:src="@{/Analysis.gif}" src="/src/main/resources/static/Analysis.gif"  style="width: 400px; height: 450px;" title="investindo"></td>
+
+					<!--Parte de texto1 stático-->
 					<td><div class="text-area">Some text here</div></tr>
 				</tr>
 				<tr>
+					<!--Parte de texto2 stático-->
 					<td><div class="text-area">some text here</div></td>
 					<td style="padding-left: 3cm;"><img th:src="@{/Cryptoportfolio.gif}" style="width: 400px; height: 450px;"></td>
 					
 				</tr>
 			</table>	
-			
-			<section style="display: flex; align-items: center; justify-content: center;">
-				<p>
-				<!-- <a class="btn btn-primary" data-bs-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Toggle first element</a> -->
-			
-				<button id="mf" class="btn btn-primary" onclick="drawCharts()" type="button" data-bs-toggle="collapse" data-bs-target=".multi-collapse" aria-expanded="false" aria-controls="info1 info2 info3 info4 info5">Mais informações</button>
 
-				</p>
+			<div id="destino" style="margin-bottom: 2cm;"></div>
+			<!--Parte de texto "Dinâmico" -->
+			<section style="display: flex; align-items: center; justify-content: center;">
+				<div class="text-info-area">
+					<p>A ação X teve uma Variação de...<br> 
+					Real tá valvendo...</p>
+				</div>
 	
 			</section>
-			<!-- Manda String para essas dados exibidos -->
-			<div class="row">
-				<div class="col">
-				  <div class="collapse multi-collapse" id="info1">
-					<div class="card card-body"><h4>REAIS</h4>
-						<div class="info">
-							<p id="reais">52.5</p>
-						</div>
-					  
-					</div>
-				  </div>
-				</div>
-				<div class="col">
-				  <div class="collapse multi-collapse" id="info2">
-					<div class="card card-body"><h4>VARIAÇÃO</h4>
-						<div class="info">
-							<p id="variacao">-22.5%</p>
-						</div>
-					</div>
-				  </div>
-				</div>
-				<div class="col">
-					<div class="collapse multi-collapse" id="info3">
-					  <div class="card card-body"><h4>MIN</h4>
-						<div class="info">
-							<p id="min">37.5</p>
-						</div>
-						
-					  </div>
-					</div>
-				  </div>
-				  <div class="col">
-					<div class="collapse multi-collapse" id="info4">
-					  <div class="card card-body"><h4>MAX</h4>
-						<div class="info">
-							<p id="max">99.5</p>
-						</div>
-					  </div>
-					</div>
-				  </div>
-				  <div class="col">
-					<div class="collapse multi-collapse" id="info5">
-					  <div class="card card-body"><h4>VOLUME</h4>
-						<div class="info">
-							<p id="volume">1.5B</p>
-						</div>
-					  </div>
-					</div>
-				  </div>
-			  </div>
 
-			  	<div id = "graph-box">
+			  	<div id="graph-box">
 
 					<section style="display: grid; align-items: center; justify-content: center; grid-template-columns: 240mm 3cm;">
 						<div id="candlechart" style="float: left; height: 450px"></div>
