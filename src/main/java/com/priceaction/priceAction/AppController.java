@@ -37,7 +37,7 @@ public class AppController {
 
 	@Deprecated
 	public void getInfo(String action){
-
+		
 	}
 
 	@Deprecated
@@ -77,7 +77,7 @@ public class AppController {
 			Collections.reverse(ListaCompleta);
 		}
 		catch(Exception e){
-			System.out.println("Ação nao encontrada");
+			e.printStackTrace();
 		}
 		return ListaCompleta;
 	}
@@ -118,7 +118,7 @@ public class AppController {
 			Collections.reverse(ListaCompleta);
 		}
 		catch(Exception e){
-			System.out.println("Ação nao encontrada");
+			e.printStackTrace();
 		}
 		return ListaCompleta;
 	}
@@ -159,18 +159,48 @@ public class AppController {
 			Collections.reverse(ListaCompleta);
 		}
 		catch(Exception e){
-			System.out.println("Ação nao encontrada");
+			e.printStackTrace();
 		}
 		return ListaCompleta;
+	}
+
+	public List<List<Object>> getClose(List<List<Object>> lista){
+		List<List<Object>> ListaClose = new ArrayList<>();
+		for(List<Object> a : lista){
+			ListaClose.add(
+				List.of(
+					a.get(0),a.get(3)
+				)
+			);
+		}
+		return ListaClose;
 	}
 
 	
 	@PostMapping("/")
 	public String getSearch(@RequestParam(name="textInput", defaultValue = "") String textInput, Model model) throws IOException{
+		List<List<Object>> L1 = getDaily(textInput);
+		List<List<Object>> L2 = getWeekly(textInput);
+		List<List<Object>> L3 = getMonthly(textInput);
 		
-		model.addAttribute("candleData1", getDaily(textInput));
-		model.addAttribute("candleData2", getWeekly(textInput));
-		model.addAttribute("candleData3", getMonthly(textInput));
+		model.addAttribute("candleData1", L1);
+		model.addAttribute("candleData2", L2);
+		model.addAttribute("candleData3", L3);
+
+
+
+		if(L1.isEmpty() || L2.isEmpty() || L3.isEmpty()){
+			model.addAttribute("dadosOK",-1);
+		}
+		else{
+			List<List<Object>> LC1 = getClose(L1);
+			List<List<Object>> LC2 = getClose(L2);
+			List<List<Object>> LC3 = getClose(L3);
+			model.addAttribute("lineData1",LC1);
+			model.addAttribute("lineData2",LC2);
+			model.addAttribute("lineData3",LC3);
+			model.addAttribute("dadosOK",1);
+		}
 		return "home";
 	}
 

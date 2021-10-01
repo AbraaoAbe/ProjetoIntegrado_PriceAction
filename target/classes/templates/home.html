@@ -139,8 +139,8 @@
 			google.charts.setOnLoadCallback(drawCharts);
 			var descricao = 'Dados fictícios';
 			
-			var line_data1 = //[[${lineData1}]];
-				//   x     y
+			var line_data1 = [[${lineData1}]];
+			/*	//   x     y
 				[			
 					['1',  70.8],
 					['2',  30.9],
@@ -157,8 +157,9 @@
 					['13',  4.8],
 					['14',  7.2]
 				];
-			var line_data2 = //[[${lineData2}]];
-				[
+			*/
+			var line_data2 = [[${lineData2}]];
+			/*	[
 					['1',  80.8],
 					['2',  75.4],
 					['3',  81.4],
@@ -174,9 +175,9 @@
 					['13',  4.8],
 					['14',  3.4]
 				];
-			
-			var line_data3 = //[[${lineData3}]];
-			[			
+			*/
+			var line_data3 = [[${lineData3}]];
+			/*[			
 					['1',  3.8],
 					['2',  30.9],
 					['3',  25.4],
@@ -192,7 +193,7 @@
 					['13',  51.8],
 					['14',  45.2]
 				];
-
+			*/
 				var lineDataDefault = 
 				[
 					['1',  23.8],
@@ -263,9 +264,9 @@
 		
 			/*----------------------------------------*/
 
-			var candle_data1 = //[[${candleData1}]];
+			var candle_data1 = [[${candleData1}]];
 			/*Dados para fazer teste na visualização do gráfico*/
-					[
+					/*[
 					['18/07', 20, 28, 38, 45],
 					['19/07', 31, 38, 55, 66],
 					['20/07', 50, 55, 77, 80],
@@ -274,10 +275,10 @@
 					['23/07', 30, 49, 55, 60],
 					['24/07', 68, 66, 22, 15]
 					];
-					
-			var candle_data2 = //[[${candleData2}]];
+					*/
+			var candle_data2 = [[${candleData2}]];
 			/*Dados para fazer teste na visualização do gráfico*/
-					[
+					/*[
 					['Sem1', 30, 35, 40, 60],
 					['Sem2', 28, 41, 55, 66],
 					['Sem3', 65, 40, 69, 80],
@@ -291,17 +292,17 @@
 					['sem11', 30, 49, 55, 60],
 					['sem12', 68, 66, 22, 15]
 					];
-			
-			var candle_data3 = //[[${candleData3}]];
+			*/
+			var candle_data3 = [[${candleData3}]];
 			/*Dados para fazer teste na visualização do gráfico*/
-					[
+/*					[
 					['MAI', 30, 35, 45, 60],
 					['JUN', 28, 41, 55, 66],
 					['JUL', 20, 28, 38, 45],
 					['AGO', 68, 63, 22, 15],
 					['SET', 38, 40, 45, 70]
 					];
-				
+*/				
 			function drawCandleStickChart(num) {
 				var data;
 
@@ -344,7 +345,7 @@
 
 			function drawCharts(num){
 				/*Se mandar -1 é por que a busca não de resultado, manda 1 para ok na busca*/
-				var sh = 1;//[[${dadosOK}]];
+				var sh = [[${dadosOK}]];
 				if(sh === 1){
 					if(num === undefined){
 						num = 1;
