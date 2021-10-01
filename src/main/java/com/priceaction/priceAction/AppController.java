@@ -176,7 +176,11 @@ public class AppController {
 		}
 		return ListaClose;
 	}
-
+	
+	public List<Object> getInfo(List<List<Object>> lista){
+		List<Object> info = new ArrayList<>();
+		
+	}
 	
 	@PostMapping("/")
 	public String getSearch(@RequestParam(name="textInput", defaultValue = "") String textInput, Model model) throws IOException{
