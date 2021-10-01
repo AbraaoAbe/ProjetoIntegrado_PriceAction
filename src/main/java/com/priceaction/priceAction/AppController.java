@@ -200,6 +200,13 @@ public class AppController {
 			model.addAttribute("lineData2",LC2);
 			model.addAttribute("lineData3",LC3);
 			model.addAttribute("dadosOK",1);
+			model.addAttribute("variacao", "+22.5%");//Tem q ser String
+			model.addAttribute("max", "50");
+			model.addAttribute("min", "3.1");
+			model.addAttribute("volume", "22.5B");
+			model.addAttribute("abertura", "30");
+			model.addAttribute("fechamento", "15");
+			model.addAttribute("nomeDaAcao", textInput);
 		}
 		return "home";
 	}

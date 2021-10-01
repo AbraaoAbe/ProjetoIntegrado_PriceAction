@@ -354,7 +354,7 @@
 					drawCandleStickChart(num);
 				}else if(sh === -1){//Busca não teve retorno
 					document.getElementById('graph-box').style.display = "none";
-					//alert('Sua busca não teve resultados');
+					alert('Ação não encontrada.');
 				}else{//Quando o site abre
 					document.getElementById('graph-box').style.display = "none";
 				}
@@ -404,8 +404,9 @@
 					<!--Parte de texto "Dinâmico" -->
 					<section style="display: flex; align-items: center; justify-content: center;">
 						<div class="text-info-area">
-							<p>A ação X teve uma Variação de...<br> 
-							Real tá valvendo...</p>
+		<p>
+			O ativo <span th:text="${nomeDaAcao}"/> concluiu com uma abertura no preço <span th:text="${abertura}"/> e o fechamento de <span th:text="${fechamento}"/>, obtendo uma variação de<span th:text="${variacao}"/>, com o volume mensurado em <span th:text="${volume}"/>. Com seus limites chegando a um valor maximo de <span th:text="${max}"/> e um valor minimo de <span th:text="${min}"/>.
+		</p>
 						</div>
 			
 					</section>
