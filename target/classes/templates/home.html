@@ -95,11 +95,12 @@
 				border-bottom-right-radius: 30px;
 				width: 800px;
 				height: 150px;
-				background-color: blueviolet;
+				background-color: rgb(141, 99, 180);
 				text-align: center;
 				font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 				align-content: center;
 				display: flex;
+				text-size-adjust: 20;
 				align-items: center;
 				justify-content: center;
 			}
@@ -326,6 +327,14 @@
 						"startup": true,
 						duration: 1000
 					},
+					candlestick:{
+						fallingColor:{
+							fill:"blueviolet"
+						},
+						risingColor:{
+							fill:"white"
+						}
+					},
 					vAxis:{
 						title:"Valor(R$)",
 					},
@@ -352,6 +361,25 @@
 					}
 					drawLineChart(num);
 					drawCandleStickChart(num);
+					var textInfo1 = document.getElementById('text-info-area1');
+					var textInfo2 = document.getElementById('text-info-area2');
+					var textInfo3 = document.getElementById('text-info-area3');
+
+					if(num === 1){
+						textInfo1.style.display = "";
+						textInfo2.style.display = "none";
+						textInfo3.style.display = "none";
+					}else if(num === 2){
+						textInfo2.style.display = "";
+						textInfo1.style.display = "none";
+						textInfo3.style.display = "none";
+					}else{
+						textInfo3.style.display = "";
+						textInfo1.style.display = "none";
+						textInfo2.style.display = "none";
+					}
+
+					document.getElementById( 'destino' ).scrollIntoView();
 				}else if(sh === -1){//Busca não teve retorno
 					document.getElementById('graph-box').style.display = "none";
 					alert('Ação não encontrada.');
@@ -365,7 +393,7 @@
 
 	<body>
 		<header>
-			<nav class="navbar navbar-dark fixed-top" style="padding-right: 80mm; padding-left: 80mm; background-color: rgba(32, 5, 32, 0.904)">
+			<nav class="navbar navbar-dark fixed-top" style="padding-right: 80mm; padding-left: 80mm; background-color: rgba(32, 5, 32, 0.904);">
 				<div class="container-fluid">
 				  <a class="navbar-brand" href="#">
 					  <img th:src="@{/Icon.png}" style="width: 50px; height: 50px;">
@@ -403,10 +431,24 @@
 
 					<!--Parte de texto "Dinâmico" -->
 					<section style="display: flex; align-items: center; justify-content: center;">
-						<div class="text-info-area">
-		<p>
-			O ativo <span th:text="${nomeDaAcao}"/> concluiu com uma abertura no preço <span th:text="${abertura}"/> e o fechamento de <span th:text="${fechamento}"/>, obtendo uma variação de<span th:text="${variacao}"/>, com o volume mensurado em <span th:text="${volume}"/>. Com seus limites chegando a um valor maximo de <span th:text="${max}"/> e um valor minimo de <span th:text="${min}"/>.
-		</p>
+
+						<div class="text-info-area" id="text-info-area1">
+							<p>
+								O ativo <span th:text="${nomeDaAcao}"/> concluiu com uma abertura no preço <span th:text="${abertura1}"/> e o fechamento de <span th:text="${fechamento1}"/>, obtendo uma variação de<span id="vr" th:text="${variacao1}"/>, com o volume mensurado em <span th:text="${volume1}"/>. Com seus limites chegando a um valor maximo de <span th:text="${max1}"/> e um valor minimo de <span th:text="${min1}"/>.
+							</p>
+
+						</div>
+						<div class="text-info-area" id="text-info-area2">
+							<p> 
+								O ativo <span th:text="${nomeDaAcao}"/> concluiu com uma abertura no preço <span th:text="${abertura2}"/> e o fechamento de <span th:text="${fechamento2}"/>, obtendo uma variação de<span id="vr" th:text="${variacao2}"/>, com o volume mensurado em <span th:text="${volume2}"/>. Com seus limites chegando a um valor maximo de <span th:text="${max2}"/> e um valor minimo de <span th:text="${min2}"/>.
+							</p>
+
+						</div>
+						<div class="text-info-area" id="text-info-area3">
+							<p>
+								O ativo <span th:text="${nomeDaAcao}"/> concluiu com uma abertura no preço <span th:text="${abertura3}"/> e o fechamento de <span th:text="${fechamento3}"/>, obtendo uma variação de<span id="vr" th:text="${variacao3}"/>, com o volume mensurado em <span th:text="${volume3}"/>. Com seus limites chegando a um valor maximo de <span th:text="${max3}"/> e um valor minimo de <span th:text="${min3}"/>.
+							</p>
+
 						</div>
 			
 					</section>

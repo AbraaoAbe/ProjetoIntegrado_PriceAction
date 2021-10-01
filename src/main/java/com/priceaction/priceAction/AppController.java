@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
 import org.springframework.ui.Model;
 
 @Controller
@@ -132,14 +131,15 @@ public class AppController {
 			URLConnection conn = url.openConnection();
 			InputStream is = conn.getInputStream();
 			String text = new String(is.readAllBytes(), StandardCharsets.UTF_8);
-	
+
 			JsonParser parser = new JsonParser();
 			JsonElement json = parser.parse(text);
 			JsonElement datas = json.getAsJsonObject().get("Monthly Time Series");
 			int cont = 0;
+			
 			for (Map.Entry<String, JsonElement> data : datas.getAsJsonObject().entrySet()) {
 				if(cont >= 20)	break;
-
+				
 				SimpleDateFormat conversor = new SimpleDateFormat("yyyy-MM-dd");
 				Date dataJSON = conversor.parse(data.getKey().toString());
 				SimpleDateFormat formatador = new SimpleDateFormat("MM/yyyy");
@@ -155,11 +155,12 @@ public class AppController {
 					)
 				);
 				cont++;
+				
 			}
 			Collections.reverse(ListaCompleta);
 		}
 		catch(Exception e){
-			e.printStackTrace();
+			
 		}
 		return ListaCompleta;
 	}
@@ -188,7 +189,7 @@ public class AppController {
 		model.addAttribute("candleData3", L3);
 
 
-
+		System.out.println('['+textInput+']');
 		if(L1.isEmpty() || L2.isEmpty() || L3.isEmpty()){
 			model.addAttribute("dadosOK",-1);
 		}
