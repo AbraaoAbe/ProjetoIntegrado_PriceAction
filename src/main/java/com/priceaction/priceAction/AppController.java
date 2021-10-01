@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Map;
 import com.google.gson.Gson;
@@ -16,6 +17,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.boot.autoconfigure.data.couchbase.CouchbaseDataAutoConfiguration.ValidationConfiguration;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -28,6 +30,8 @@ import org.springframework.ui.Model;
 
 @Controller
 public class AppController {
+
+	private int volume1,volume2,volume3;
 	
 	@GetMapping("/")
 	public String getHome(Model model){
@@ -55,6 +59,8 @@ public class AppController {
 			int cont = 0;
 			for(Map.Entry<String, JsonElement> data : datas.getAsJsonObject().entrySet()) {
 				if(cont >= 20)	break;
+				
+				if(cont == 0)	volume1 = data.getValue().getAsJsonObject().get("5. volume").getAsInt();
 
 				SimpleDateFormat conversor = new SimpleDateFormat("yyyy-MM-dd");
 				Date dataJSON = conversor.parse(data.getKey().toString());
@@ -98,6 +104,8 @@ public class AppController {
 			for (Map.Entry<String, JsonElement> data : datas.getAsJsonObject().entrySet()) {
 				if(cont >= 20)	break;
 
+				if(cont == 0)	volume2 = data.getValue().getAsJsonObject().get("5. volume").getAsInt();
+
 				SimpleDateFormat conversor = new SimpleDateFormat("yyyy-MM-dd");
 				Date dataJSON = conversor.parse(data.getKey().toString());
 				SimpleDateFormat formatador = new SimpleDateFormat("dd/MM");
@@ -139,6 +147,8 @@ public class AppController {
 			
 			for (Map.Entry<String, JsonElement> data : datas.getAsJsonObject().entrySet()) {
 				if(cont >= 20)	break;
+
+				if(cont == 0)	volume3 = data.getValue().getAsJsonObject().get("5. volume").getAsInt();
 				
 				SimpleDateFormat conversor = new SimpleDateFormat("yyyy-MM-dd");
 				Date dataJSON = conversor.parse(data.getKey().toString());
@@ -180,6 +190,20 @@ public class AppController {
 	public List<Object> getInfo(List<List<Object>> lista){
 		List<Object> info = new ArrayList<>();
 		
+		double high = (double) lista.get(19).get(4);
+		double low = (double) lista.get(19).get(1);
+		double open = (double) lista.get(19).get(2);
+		double close = (double) lista.get(19).get(3);
+		double variation = ((close - open) * 100)/open;
+		
+		DecimalFormat df = new DecimalFormat("0,00");
+		
+		info.add(df.format(variation));
+		info.add(high);
+		info.add(low);
+		info.add(open);
+		info.add(close);
+		return info;
 	}
 	
 	@PostMapping("/")
@@ -193,7 +217,6 @@ public class AppController {
 		model.addAttribute("candleData3", L3);
 
 
-		System.out.println('['+textInput+']');
 		if(L1.isEmpty() || L2.isEmpty() || L3.isEmpty()){
 			model.addAttribute("dadosOK",-1);
 		}
@@ -205,12 +228,33 @@ public class AppController {
 			model.addAttribute("lineData2",LC2);
 			model.addAttribute("lineData3",LC3);
 			model.addAttribute("dadosOK",1);
-			model.addAttribute("variacao", "+22.5%");//Tem q ser String
-			model.addAttribute("max", "50");
-			model.addAttribute("min", "3.1");
-			model.addAttribute("volume", "22.5B");
-			model.addAttribute("abertura", "30");
-			model.addAttribute("fechamento", "15");
+
+			List<Object> LI1 = getInfo(L1);
+
+			model.addAttribute("variacao1", LI1.get(0).toString());//Tem q ser String
+			model.addAttribute("max1", LI1.get(1));
+			model.addAttribute("min1", LI1.get(2));
+			model.addAttribute("volume1", volume1);
+			model.addAttribute("abertura1", LI1.get(3));
+			model.addAttribute("fechamento1", LI1.get(4));
+
+			List<Object> LI2 = getInfo(L2);
+
+			model.addAttribute("variacao2", LI2.get(0).toString());//Tem q ser String
+			model.addAttribute("max2", LI2.get(1));
+			model.addAttribute("min2", LI2.get(2));
+			model.addAttribute("volume2", volume2);
+			model.addAttribute("abertura2", LI2.get(3));
+			model.addAttribute("fechamento2", LI2.get(4));
+
+			List<Object> LI3 = getInfo(L3);
+			
+			model.addAttribute("variacao3",LI3.get(0).toString() );//Tem q ser String
+			model.addAttribute("max3", LI3.get(1));
+			model.addAttribute("min3", LI3.get(2));
+			model.addAttribute("volume3", volume3);
+			model.addAttribute("abertura3", LI3.get(3));
+			model.addAttribute("fechamento3", LI3.get(4));
 			model.addAttribute("nomeDaAcao", textInput);
 		}
 		return "home";
