@@ -84,7 +84,10 @@
 				border-color: blueviolet;
 				border-radius: 10px;
 				width: 500px;
-				height: 300px;				
+				height: 330px;			
+				text-align: justify;
+				padding-left: 2mm;
+				padding-right: 2mm;	
 			}
 
 			.text-info-area{
@@ -95,7 +98,7 @@
 				border-bottom-right-radius: 30px;
 				width: 800px;
 				height: 150px;
-				background-color: rgb(141, 99, 180);
+				/*background-color: rgb(141, 99, 180);*/
 				text-align: center;
 				font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 				align-content: center;
@@ -141,7 +144,7 @@
 			var descricao = 'Dados fictícios';
 			
 			var line_data1 = [[${lineData1}]];
-			/*	
+			/*	//   x     y
 				[			
 					['1',  70.8],
 					['2',  30.9],
@@ -214,7 +217,7 @@
 				];
 			function drawLineChart(num) {
 				
-				var nomeAcao = 'AçãoX';//BackEnd envia o nome
+				var nomeAcao = [[${nomeDaAcao}]]; 
 				var legenda;
 				var data = new google.visualization.DataTable();
 				data.addColumn('string', null);
@@ -364,19 +367,49 @@
 					var textInfo1 = document.getElementById('text-info-area1');
 					var textInfo2 = document.getElementById('text-info-area2');
 					var textInfo3 = document.getElementById('text-info-area3');
-
+					var vr;
+					var aux;
 					if(num === 1){
 						textInfo1.style.display = "";
 						textInfo2.style.display = "none";
 						textInfo3.style.display = "none";
+						vr = [[${variacao1}]];
+						aux = document.getElementById('vr1');
+						if(vr < 0){
+							aux.style.color = "red";
+							aux.innerHTML = vr + "%";
+						}else{
+							aux.style.color = "lightgreen";
+							aux.innerHTML = "+" + vr + "%";
+						}
+						
 					}else if(num === 2){
 						textInfo2.style.display = "";
 						textInfo1.style.display = "none";
 						textInfo3.style.display = "none";
+
+						vr = [[${variacao2}]];
+						aux = document.getElementById('vr2');
+						if(vr < 0){
+							aux.style.color = "red";
+							aux.innerHTML = vr + "%";
+						}else{
+							aux.style.color = "lightgreen";
+							aux.innerHTML = "+" + vr + "%";
+						}
 					}else{
 						textInfo3.style.display = "";
 						textInfo1.style.display = "none";
 						textInfo2.style.display = "none";
+						vr = [[${variacao1}]];
+						aux = document.getElementById('vr3');
+						if(vr < 0){
+							aux.style.color = "red";
+							aux.innerHTML = vr + "%";
+						}else{
+							aux.style.color = "lightgreen";
+							aux.innerHTML = "+" + vr + "%";
+						}
 					}
 
 					document.getElementById( 'destino' ).scrollIntoView();
@@ -401,8 +434,8 @@
 				  </a>
 				  <!-- action="/" method="POST" -->
 					<form class="d-flex" action="/#destino" method="POST">
-					  <input class="form-control me-2" type="text" name="textInput" placeholder='AçãoX' aria-label="Search">
-					  <button class="btn btn-outline-success" type="submit">Search</button>
+					  <input class="form-control me-2" type="text" name="textInput" placeholder='Código do ativo' aria-label="Pesquisar">
+					  <button class="btn btn-outline-success" type="submit">Pesquisar</button>
 					</form>
 				  </div>
 				</div>
@@ -415,11 +448,34 @@
 					<td style="padding-right: 3cm;"><img th:src="@{/Analysis.gif}" src="/src/main/resources/static/Analysis.gif"  style="width: 400px; height: 450px;" title="" alt="Imagem Ilustrativa"></td>
 
 					<!--Parte de texto1 stático-->
-					<td><div class="text-area">Some text here</div></tr>
+					<td><div class="text-area">
+
+						<p>
+							<h4 style="align-self: center;">O que é investimento?</h4>
+O conceito de investimento é bastante amplo. Mas, de forma geral, podemos dizer que é “plantar agora para depois colher”. 
+
+Ao investir, o indivíduo aplica uma quantidade de dinheiro agora para, posteriormente, ter um retorno de capital maior do que aplicou. Portanto, todo investimento tem como objetivo o lucro.<br>
+
+Os investimentos podem ser feitos de diversas formas: compra de ações ou parcelas de fundos de investimentos; compras de moeda estrangeira; compras de títulos de renda fixa e variável; compras de imóveis; compras de títulos de dívida bancária, entre outros.
+						</p>
+					</div></tr>
 				</tr>
 				<tr>
 					<!--Parte de texto2 stático-->
-					<td><div class="text-area">some text here</div></td>
+					<td><div class="text-area">
+						<p>
+							<h4 style="align-self: center;">O que é o gráfico de candlestick?</h4>
+
+O gráfico de candlestick é uma forma de mostrar o que ocorreu com o preço de uma ação, em um determinado período de tempo. Ele é o tipo mais popular entre os investidores que usam a Análise Técnica. Afinal, esse tipo de gráfico traz várias informações em um único elemento visual.<br>
+
+O formato do candle, por sua vez, é determinado por importantes valores que o preço da ação atingiu durante o período escolhido. São os preço de: abertura, fechamento, mínimo, máximo
+
+Esses valores dão forma aos dois elementos que compõem um Candle:
+
+o corpo (que traz as informações de fechamento e abertura);
+a sombra (que informa os máximos e mínimos do período).
+						</p>
+					</div></td>
 					<td style="padding-left: 3cm;"><img th:src="@{/Cryptoportfolio.gif}" alt="Imagem Ilustrativa" style="width: 400px; height: 450px;"></td>
 					
 				</tr>
@@ -430,23 +486,23 @@
 			  	<div id="graph-box">
 
 					<!--Parte de texto "Dinâmico" -->
-					<section style="display: flex; align-items: center; justify-content: center;">
+					<section style="display: grid; align-items: center; justify-content: center;">
 
 						<div class="text-info-area" id="text-info-area1">
 							<p>
-								O ativo <span th:text="${nomeDaAcao}"/> concluiu com uma abertura no preço <span th:text="${abertura1}"/> e o fechamento de <span th:text="${fechamento1}"/>, obtendo uma variação de<span id="vr" th:text="${variacao1}"/>, com o volume mensurado em <span th:text="${volume1}"/>. Com seus limites chegando a um valor maximo de <span th:text="${max1}"/> e um valor minimo de <span th:text="${min1}"/>.
+								O ativo <span th:text="${nomeDaAcao}"/> concluiu com uma abertura no preço <span th:text="${abertura1}"/> e o fechamento de <span th:text="${fechamento1}"/>, obtendo uma variação de <span id="vr1" th:text="${variacao1}"/>, com o volume mensurado em <span th:text="${volume1}"/>. Com seus limites chegando a um valor maximo de <span th:text="${max1}"/> e um valor minimo de <span th:text="${min1}"/>.
 							</p>
 
 						</div>
 						<div class="text-info-area" id="text-info-area2">
 							<p> 
-								O ativo <span th:text="${nomeDaAcao}"/> concluiu com uma abertura no preço <span th:text="${abertura2}"/> e o fechamento de <span th:text="${fechamento2}"/>, obtendo uma variação de<span id="vr" th:text="${variacao2}"/>, com o volume mensurado em <span th:text="${volume2}"/>. Com seus limites chegando a um valor maximo de <span th:text="${max2}"/> e um valor minimo de <span th:text="${min2}"/>.
+								O ativo <span th:text="${nomeDaAcao}"/> concluiu com uma abertura no preço <span th:text="${abertura2}"/> e o fechamento de <span th:text="${fechamento2}"/>, obtendo uma variação de <span id="vr2" th:text="${variacao2}"/>, com o volume mensurado em <span th:text="${volume2}"/>. Com seus limites chegando a um valor maximo de <span th:text="${max2}"/> e um valor minimo de <span th:text="${min2}"/>.
 							</p>
 
 						</div>
 						<div class="text-info-area" id="text-info-area3">
 							<p>
-								O ativo <span th:text="${nomeDaAcao}"/> concluiu com uma abertura no preço <span th:text="${abertura3}"/> e o fechamento de <span th:text="${fechamento3}"/>, obtendo uma variação de<span id="vr" th:text="${variacao3}"/>, com o volume mensurado em <span th:text="${volume3}"/>. Com seus limites chegando a um valor maximo de <span th:text="${max3}"/> e um valor minimo de <span th:text="${min3}"/>.
+								O ativo <span th:text="${nomeDaAcao}"/> concluiu com uma abertura no preço <span th:text="${abertura3}"/> e o fechamento de <span th:text="${fechamento3}"/>, obtendo uma variação de <span id="vr3" th:text="${variacao3}"/>, com o volume mensurado em <span th:text="${volume3}"/>. Com seus limites chegando a um valor maximo de <span th:text="${max3}"/> e um valor minimo de <span th:text="${min3}"/>.
 							</p>
 
 						</div>
