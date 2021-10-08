@@ -33,6 +33,11 @@ public class AppController {
 
 	private int volume1,volume2,volume3;
 	
+	
+	/** 
+	 * @param model
+	 * @return String
+	 */
 	@GetMapping("/")
 	public String getHome(Model model){
 		return "home";
