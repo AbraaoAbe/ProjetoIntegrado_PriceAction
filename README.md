@@ -10,18 +10,20 @@ Todas as dependências já vem instaladas quando clona o github, logo basta aces
 
 ## Histórico de lançamentos
 
-* 0.2
-    * Front-End com os graficos com dados fictícios
-* 0.4
-    * Implementação do GET da API alphavantage
-* 0.6
-*    * Conexão Front-Back-End. Dados dos gráficos conforme os dados da API.
-* 0.8
+* Versão 0.2:
+    * Front-End com os graficos com dados fictícios.
+* Versão 0.4:
+    * Implementação dos GET's da API alphavantage.
+* Versão 0.6:
+    * Conexão Front-Back-End. Dados dos gráficos conforme os dados da API.
+    * Textos da página home do sistema.
+* Versão 0.8:
     * Implementação da busca de ativos no Sistema.
-* 1.0
-    * Sistema PriceAction finalizado
+    * Mensagem de aviso quando um ativo que não existe é buscado.
+* Versão 1.0:
+    * Sistema PriceAction finalizado.
 
 ## Autoria
-Alex Santos de Oliveira
-Abraão Jesus dos Santos
-Miguel Almeida Carlini
+* Alex Santos de Oliveira
+* Abraão Jesus dos Santos
+* Miguel Almeida Carlini
