@@ -27,3 +27,10 @@ Todas as dependências já vem instaladas quando clona o github, logo basta aces
 * Alex Santos de Oliveira
 * Abraão Jesus dos Santos
 * Miguel Almeida Carlini
+---
+
+# Tecnologias usadas no desenvolvimento do trabalho 
+1. Como utilizar os graficos do [Google Charts](https://developers.google.com/chart/interactive/docs/quick_start)
+2. [Spring Boot](https://spring.io/projects/spring-boot) para criar um servidor local e fazer testes.
+3. [Thymeleaf](https://www.baeldung.com/thymeleaf-in-spring-mvc) para a integração do back-end com o fron-end e também para colocar os dados dos gráficos neste [link](https://www.wimdeblauwe.com/blog/2021/01/05/using-google-charts-with-thymeleaf/)
+4. [Bootstrap](https://getbootstrap.com/docs/5.1/getting-started/introduction/) para algumas estruturas HTML

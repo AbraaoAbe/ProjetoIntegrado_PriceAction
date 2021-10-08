@@ -38,11 +38,12 @@ public class AppController {
 		return "home";
 	}
 
-	@Deprecated
-	public void getInfo(String action){
-		
-	}
-
+	
+	/** 
+	 * @param action
+	 * @return Retorna uma lista de lista com os valores diários das ações no Formato Gráfico de Candle
+	 * 
+	 */
 	@Deprecated
 	public List<List<Object>> getDaily(String action){
 		List<List<Object>> ListaCompleta = new ArrayList<>();
@@ -87,6 +88,12 @@ public class AppController {
 		return ListaCompleta;
 	}
 
+	
+	/** 
+	 * @param action
+	 * @return Retorna uma lista de lista com os valores semanais das ações no Formato Gráfico de Candle
+	 * 
+	 */
 	@Deprecated
 	public List<List<Object>> getWeekly(String action){
 		List<List<Object>> ListaCompleta = new ArrayList<>();
@@ -130,6 +137,11 @@ public class AppController {
 		return ListaCompleta;
 	}
 
+	
+	/** 
+	 * @param action
+	 * @return Retorna uma lista de lista com os valores mensais das ações no Formato Gráfico de Candle
+	 */
 	@Deprecated
 	public List<List<Object>> getMonthly(String action){
 		List<List<Object>> ListaCompleta = new ArrayList<>();
@@ -175,6 +187,13 @@ public class AppController {
 		return ListaCompleta;
 	}
 
+	
+	/** 
+	 * 
+	 * @param lista Lista com os valores das infomações que foram capturadas na API
+	 * @return Retorna os valores de fechamento da lista (diários, semanais ou mensais)
+	 * 
+	 */
 	public List<List<Object>> getClose(List<List<Object>> lista){
 		List<List<Object>> ListaClose = new ArrayList<>();
 		for(List<Object> a : lista){
@@ -187,6 +206,13 @@ public class AppController {
 		return ListaClose;
 	}
 	
+	
+	/** 
+	 * 
+	 * @param lista Lista com os valores das infomações que foram capturadas na API
+	 * @return Retorna uma lista com os valores (Máximo, mínimo, variação...) referentes ao último dia/semana/mês 
+	 * 
+	 */
 	public List<Object> getInfo(List<List<Object>> lista){
 		List<Object> info = new ArrayList<>();
 		
@@ -206,6 +232,15 @@ public class AppController {
 		return info;
 	}
 	
+	
+	/** 
+	 * 
+	 * @param @RequestParam(name="textInput" Captura o post
+	 * @param textInput Variável Capturar a entrada do usuário no input de pesquisa do site
+	 * @return Nome do arquivo HTML
+	 * @throws IOException Pode ser gerado um erro na hora de manipular os dados da API
+	 * 
+	 */
 	@PostMapping("/")
 	public String getSearch(@RequestParam(name="textInput", defaultValue = "") String textInput, Model model) throws IOException{
 		List<List<Object>> L1 = getDaily(textInput);
@@ -260,35 +295,4 @@ public class AppController {
 		return "home";
 	}
 
-	//Os dados podem ser modificados para exibir o gráfico de maneira diferente
-	private List<List<Object>> getChartData1() { 
-		
-		
-		return List.of(
-				List.of("Mon", 20, 28, 38, 45),
-				List.of("Tue", 31, 38, 55, 66),
-				List.of("Wed", 50, 55, 77, 80),
-				List.of("Thu", 77, 77, 66, 50),
-				List.of("Fri", 68, 66, 22, 15),
-				List.of("Maria", 30, 49, 55, 60)
-			);
-    }
-
-	private List<List<Object>> getChartData2() {
-
-		return	List.of(
-				List.of("Mon", 30, 35, 40, 60),
-				List.of("Tue",28, 41, 55, 66),
-				List.of("Wed", 65, 40, 69, 80),
-				List.of("Thu", 21, 28, 40, 55),
-				List.of("Fri", 38, 40, 45, 70)
-			);
-	}
-
-	 @GetMapping("graficos")
-	 public String getGraphs(@RequestParam(name="nome",defaultValue="") String nome, Model model){
-	 	model.addAttribute("chartData1", getChartData1());
-	 	model.addAttribute("chartData2", getChartData2());
-	 	return "graficos";
-	 }
 }
